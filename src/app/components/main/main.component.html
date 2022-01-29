@@ -1,0 +1,77 @@
+<div class="container">
+  <div class="row">
+    <div class="col d-flex justify-content-center">
+      <h1>Boticarium</h1>
+    </div>
+  </div>
+  <div class="row d-flex flex-column align-content-center">
+    <div class="col-3 mt-4" *ngIf="!isNewPlayer">
+      <label for="selectPlayer" class="form-label">
+        Selecione um personagem:
+      </label>
+      <select
+        class="form-select"
+        name="selectPlayer"
+        id="selectPlayer"
+        (change)="selectPlayer($event)"
+      >
+        <option value="">Selecione</option>
+        <option value="{{ player.id }}" *ngFor="let player of playersList">
+          {{ player.name }}
+        </option>
+      </select>
+      <button class="btn btn-secondary w-100 mt-4" (click)="startGame()">
+        Continuar
+      </button>
+    </div>
+    <div
+      class="col-3 d-flex justify-content-center mt-4"
+      *ngIf="!isNewPlayer"
+    ></div>
+    <div class="col-3 d-flex justify-content-center mt-4">
+      <button
+        class="btn btn-primary w-100"
+        (click)="isNewPlayer = true"
+        *ngIf="!isNewPlayer"
+      >
+        Novo Jogador
+      </button>
+      <button
+        class="btn btn-secondary w-100"
+        (click)="isNewPlayer = false"
+        *ngIf="isNewPlayer"
+      >
+        Voltar
+      </button>
+    </div>
+    <div class="col-3 mt-4" *ngIf="isNewPlayer">
+      <label for="name" class="form-label">Nome:</label>
+      <input
+        type="text"
+        name="name"
+        id="name"
+        class="form-control"
+        [(ngModel)]="newPlayerName"
+      />
+      <small class="text-danger" *ngIf="doubleNameMsg"
+        >Este nome está em uso.</small
+      >
+      <button class="btn btn-primary mt-4 w-100" (click)="startNewGame()">
+        Começar
+      </button>
+    </div>
+  </div>
+  <div class="row" *ngIf="selectedPlayerId">
+    <div class="col">
+      <ul *ngIf="selectedPlayer">
+        <span>Jogador:</span>
+        <li>Nome: {{selectedPlayer.name}}</li>
+        <li>Nível: {{selectedPlayer.level}}</li>
+        <li>Ouro: {{selectedPlayer.gold}}</li>
+        <li>Reputação: {{selectedPlayer.reputation}}</li>
+        <li>Tendência: {{selectedPlayer.tendency}}</li>
+        <li>Experiência: {{selectedPlayer.experience}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
