@@ -1,9 +1,9 @@
+import { HerbsStorageDto } from "./herbs-storage.dto";
+import { PlayerStatsDto } from "./player-stats.dto";
+import { PotionsStorageDto } from "./potions-storage.dto";
+
 export interface PlayerDto {
-  id: number;
-  gold: number;
-  name: string;
-  level: number;
-  reputation: number;
-  tendency: string;
-  experience: number;
+  stats: PlayerStatsDto,
+  herbStorage: HerbsStorageDto[],
+  potionStorage: PotionsStorageDto[],
 }

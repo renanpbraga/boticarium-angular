@@ -16,8 +16,8 @@
         (change)="selectPlayer($event)"
       >
         <option value="">Selecione</option>
-        <option value="{{ player.id }}" *ngFor="let player of playersList">
-          {{ player.name }}
+        <option value="{{ player.stats.id }}" *ngFor="let player of playersList">
+          {{ player.stats.name }}
         </option>
       </select>
       <button class="btn btn-secondary w-100 mt-4" (click)="startGame()">
@@ -68,12 +68,12 @@
     <div class="col">
       <ul *ngIf="selectedPlayer">
         <span>Jogador:</span>
-        <li>Nome: {{selectedPlayer.name}}</li>
-        <li>Nível: {{selectedPlayer.level}}</li>
-        <li>Ouro: {{selectedPlayer.gold}}</li>
-        <li>Reputação: {{selectedPlayer.reputation}}</li>
-        <li>Tendência: {{selectedPlayer.tendency}}</li>
-        <li>Experiência: {{selectedPlayer.experience}}</li>
+        <li>Nome: {{selectedPlayer.stats.name}}</li>
+        <li>Nível: {{selectedPlayer.stats.level}}</li>
+        <li>Ouro: {{selectedPlayer.stats.gold}}</li>
+        <li>Reputação: {{selectedPlayer.stats.reputation}}</li>
+        <li>Tendência: {{selectedPlayer.stats.tendency}}</li>
+        <li>Experiência: {{selectedPlayer.stats.experience}}</li>
       </ul>
     </div>
   </div>
