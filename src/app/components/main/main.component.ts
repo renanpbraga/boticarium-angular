@@ -12,13 +12,36 @@ export class MainComponent implements OnInit, OnChanges {
   isNewPlayer = false;
   newPlayerName: string = '';
   newPlayer: PlayerDto = {
-    id: 0,
-    gold: 0,
-    name: '',
-    level: 1,
-    reputation: 0,
-    tendency: 'Neutro',
-    experience: 0,
+    stats: {
+      id: 0,
+      gold: 0,
+      name: '',
+      level: 1,
+      reputation: 0,
+      tendency: 'Neutro',
+      experience: 0,
+    },
+    herbStorage: [
+      {
+        name: 'Alamanda',
+        description:
+          'Planta semi-arbustiva de porte médio e caule delgado. Possui flores amarelas com leve aroma adocicado. Parte utilizada: Flores.',
+        potential: 2,
+        price: 2,
+        img: 'img',
+        quantity: 2,
+      },
+      {
+        name: 'Citrizela',
+        description:
+          'Planta herbácea fa família das gramíneas. Possui folhas longas e lanceoladas. Ao ser macerada, libera um suave odor cítrico. Parte utilizada: Folhas. ',
+        potential: 1,
+        price: 2,
+        img: 'img',
+        quantity: 2,
+      },
+    ],
+    potionStorage: [],
   };
   doubleNameMsg = false;
   fillNamePlease = false;
@@ -45,8 +68,8 @@ export class MainComponent implements OnInit, OnChanges {
         this.fillNamePlease = true;
       } else {
         this.fillNamePlease = false;
-        this.newPlayer.name = this.newPlayerName;
-        this.newPlayer.id = 1;
+        this.newPlayer.stats.name = this.newPlayerName;
+        this.newPlayer.stats.id = 1;
         localStorage.setItem('players', JSON.stringify([this.newPlayer]));
         this.updatePlayersList();
       }
@@ -66,19 +89,11 @@ export class MainComponent implements OnInit, OnChanges {
             this.fillNamePlease = true;
           } else {
             this.fillNamePlease = false;
-            this.newPlayer.name = this.newPlayerName;
-            this.newPlayer.id = parsePlayer.length + 1;
+            this.newPlayer.stats.name = this.newPlayerName;
+            this.newPlayer.stats.id = parsePlayer.length + 1;
             parsePlayer.push(this.newPlayer);
             localStorage.setItem('players', JSON.stringify(parsePlayer));
             this.updatePlayersList();
-            const storedPlayer = this.getPlayers();
-            if (storedPlayer) {
-              const parseStoredPlayer = JSON.parse(storedPlayer);
-              this.boticariumService.setPlayersList(parseStoredPlayer);
-              this.boticariumService.playersList.subscribe(
-                (res) => (this.playersList = res)
-              );
-            }
           }
         }
       }
