@@ -64,7 +64,7 @@ export class MainComponent implements OnInit, OnChanges {
   getPlayers() {
     return localStorage.getItem('players');
   }
-
+// enviando para develop
   selectPlayer(event: any) {
     this.selectedPlayerId = event.target.value;
     const playersList = this.getPlayers();
@@ -75,6 +75,7 @@ export class MainComponent implements OnInit, OnChanges {
       );
       this.selectedPlayer = foundPlayer;
     }
+
   }
 
   startGame() {
