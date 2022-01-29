@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { GardenComponent } from './components/garden/garden.component';
 import { LaboratoryComponent } from './components/laboratory/laboratory.component';
 import { LibraryComponent } from './components/library/library.component';

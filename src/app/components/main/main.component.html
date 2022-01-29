@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="row d-flex flex-column align-content-center">
-    <div class="col-3 mt-4" *ngIf="!isNewPlayer">
+    <div class="col-3 mt-4" *ngIf="!isNewPlayer && playersList">
       <label for="selectPlayer" class="form-label">
         Selecione um personagem:
       </label>
@@ -53,6 +53,9 @@
         class="form-control"
         [(ngModel)]="newPlayerName"
       />
+      <small class="text-danger" *ngIf="fillNamePlease"
+        >Seu personagem deve ter um nome.</small
+      >
       <small class="text-danger" *ngIf="doubleNameMsg"
         >Este nome está em uso.</small
       >
