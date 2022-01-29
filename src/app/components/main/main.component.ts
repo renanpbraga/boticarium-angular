@@ -1,5 +1,6 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { PlayerDto } from 'src/app/dtos/player.dto';
+import { BoticariumService } from 'src/app/services/boticarium.service';
 
 @Component({
   selector: 'app-main',
@@ -7,7 +8,7 @@ import { PlayerDto } from 'src/app/dtos/player.dto';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit, OnChanges {
-  constructor() {}
+  constructor(private readonly boticariumService: BoticariumService) {}
   isNewPlayer = false;
   newPlayerName: string = '';
   newPlayer: PlayerDto = {
@@ -20,7 +21,8 @@ export class MainComponent implements OnInit, OnChanges {
     experience: 0,
   };
   doubleNameMsg = false;
-  playersList?: any[];
+  fillNamePlease = false;
+  playersList?: PlayerDto[];
   selectedPlayer?: PlayerDto;
   selectedPlayerId?: number;
 
@@ -36,26 +38,48 @@ export class MainComponent implements OnInit, OnChanges {
   }
 
   startNewGame() {
+    // creates the first player in localStorage
     const areTherePlayers = this.getPlayers();
     if (!areTherePlayers) {
-      this.newPlayer.name = this.newPlayerName;
-      this.newPlayer.id = 1;
-      localStorage.setItem('players', JSON.stringify([this.newPlayer]));
+      if (this.newPlayerName === '') {
+        this.fillNamePlease = true;
+      } else {
+        this.fillNamePlease = false;
+        this.newPlayer.name = this.newPlayerName;
+        this.newPlayer.id = 1;
+        localStorage.setItem('players', JSON.stringify([this.newPlayer]));
+        this.updatePlayersList();
+      }
     } else {
+      // creates the 'n' player in localStorage
       const player = this.getPlayers();
       if (player) {
         const parsePlayer = JSON.parse(player);
         const nameExists = parsePlayer.find(
-          (play: any) => play.name === Number(this.newPlayerName)
+          (play: any) => play.name === this.newPlayerName
         );
         if (nameExists) {
           this.doubleNameMsg = true;
         } else {
           this.doubleNameMsg = false;
-          this.newPlayer.name = this.newPlayerName;
-          this.newPlayer.id = parsePlayer.length + 1;
-          parsePlayer.push(this.newPlayer);
-          localStorage.setItem('players', JSON.stringify(parsePlayer));
+          if (this.newPlayerName === '') {
+            this.fillNamePlease = true;
+          } else {
+            this.fillNamePlease = false;
+            this.newPlayer.name = this.newPlayerName;
+            this.newPlayer.id = parsePlayer.length + 1;
+            parsePlayer.push(this.newPlayer);
+            localStorage.setItem('players', JSON.stringify(parsePlayer));
+            this.updatePlayersList();
+            const storedPlayer = this.getPlayers();
+            if (storedPlayer) {
+              const parseStoredPlayer = JSON.parse(storedPlayer);
+              this.boticariumService.setPlayersList(parseStoredPlayer);
+              this.boticariumService.playersList.subscribe(
+                (res) => (this.playersList = res)
+              );
+            }
+          }
         }
       }
     }
@@ -63,6 +87,17 @@ export class MainComponent implements OnInit, OnChanges {
 
   getPlayers() {
     return localStorage.getItem('players');
+  }
+
+  updatePlayersList() {
+    const storedPlayer = this.getPlayers();
+    if (storedPlayer) {
+      const parseStoredPlayer = JSON.parse(storedPlayer);
+      this.boticariumService.setPlayersList(parseStoredPlayer);
+      this.boticariumService.playersList.subscribe(
+        (res) => (this.playersList = res)
+      );
+    }
   }
 
   selectPlayer(event: any) {
@@ -75,7 +110,6 @@ export class MainComponent implements OnInit, OnChanges {
       );
       this.selectedPlayer = foundPlayer;
     }
-
   }
 
   startGame() {

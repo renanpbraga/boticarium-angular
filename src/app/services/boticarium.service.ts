@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { HerbsDto } from '../dtos/herbs.dto';
 import { PotionsDto } from '../dtos/potions.dto';
 
@@ -7,6 +8,11 @@ import { PotionsDto } from '../dtos/potions.dto';
 })
 export class BoticariumService {
   constructor() {}
+  playersList = new BehaviorSubject([])
+  
+  setPlayersList(obj: any) {
+    this.playersList.next(obj);
+  }
 
   getPotions(): PotionsDto[] {
     const potions = [
