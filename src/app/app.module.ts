@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { HistoryComponent } from './components/history/history.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CauldronComponent } from './components/laboratory/cauldron/cauldron.component';
+import { HerbstorageComponent } from './components/laboratory/herbstorage/herbstorage.component';
+import { PotionstorageComponent } from './components/laboratory/potionstorage/potionstorage.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { CauldronComponent } from './components/laboratory/cauldron/cauldron.com
     HistoryComponent,
     NavbarComponent,
     CauldronComponent,
+    HerbstorageComponent,
+    PotionstorageComponent,
   ],
   imports: [
     CommonModule,
