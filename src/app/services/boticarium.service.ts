@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { HerbsStorageDto } from '../dtos/herbs-storage.dto';
 import { HerbsDto } from '../dtos/herbs.dto';
 import { PotionsDto } from '../dtos/potions.dto';
 
@@ -60,5 +61,23 @@ export class BoticariumService {
       },
     ];
     return herbs;
+  }
+
+  getPlayerHerbs() {
+    const player = sessionStorage.getItem('player');
+    if (player) {
+      const parsePlayer = JSON.parse(player);
+      const herbs = parsePlayer.herbStorage;
+      return herbs;
+    }
+  }
+
+  getPlayerPotions() {
+    const player = sessionStorage.getItem('player');
+    if (player) {
+      const parsePlayer = JSON.parse(player);
+      const potions = parsePlayer.potionStorage;
+      return potions;
+    }
   }
 }
