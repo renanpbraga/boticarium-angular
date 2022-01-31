@@ -5,6 +5,7 @@ import { HistoryComponent } from './components/history/history.component';
 import { LaboratoryComponent } from './components/laboratory/laboratory.component';
 import { LibraryComponent } from './components/library/library.component';
 import { MainComponent } from './components/main/main.component';
+import { ShopComponent } from './components/shop/shop.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,10 @@ const routes: Routes = [
   {
     path: 'historia',
     component: HistoryComponent,
+  },
+  {
+    path: 'loja',
+    component: ShopComponent,
   },
 ];
 
