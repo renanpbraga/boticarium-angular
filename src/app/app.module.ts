@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HistoryComponent } from './components/history/history.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ShopComponent } from './components/shop/shop.component';
 import { CauldronComponent } from './components/laboratory/cauldron/cauldron.component';
 import { HerbstorageComponent } from './components/laboratory/herbstorage/herbstorage.component';
 import { PotionstorageComponent } from './components/laboratory/potionstorage/potionstorage.component';
@@ -24,6 +25,7 @@ import { PotionstorageComponent } from './components/laboratory/potionstorage/po
     MainComponent,
     HistoryComponent,
     NavbarComponent,
+    ShopComponent,
     CauldronComponent,
     HerbstorageComponent,
     PotionstorageComponent,
