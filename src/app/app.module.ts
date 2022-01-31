@@ -10,6 +10,8 @@ import { MainComponent } from './components/main/main.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HistoryComponent } from './components/history/history.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+// import { CauldronComponent } from './components/laboratory/cauldron/cauldron.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { HistoryComponent } from './components/history/history.component';
     LibraryComponent,
     MainComponent,
     HistoryComponent,
+    NavbarComponent,
+    // CauldronComponent,
   ],
   imports: [
     CommonModule,
