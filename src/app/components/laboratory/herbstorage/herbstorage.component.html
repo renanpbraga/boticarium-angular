@@ -1,4 +1,5 @@
 <ul>
   <span>Armário de ervas</span>
+  <li *ngIf="!herbstorage">Vazio...</li>
   <li *ngFor="let herb of herbstorage">{{herb.name}} (x{{herb.quantity}})</li>
 </ul>
