@@ -39,7 +39,15 @@ export class MainComponent implements OnInit {
         quantity: 2,
       },
     ],
-    potionStorage: [],
+    potionStorage: [{
+      name: 'Poção de cura (menor)',
+      description:
+        'Esta poção possui efeito de cura lento porém gradual. Usada geralmente para casos menos graves de ferimentos ou enfermidades leves.',
+      element: 'Água',
+      price: 10,
+      potential: 4,
+      quantity: 1,
+    }],
   };
   doubleNameMsg = false;
   fillNamePlease = false;
