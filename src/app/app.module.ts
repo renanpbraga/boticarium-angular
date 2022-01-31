@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HistoryComponent } from './components/history/history.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CauldronComponent } from './components/laboratory/cauldron/cauldron.component';
+import { HerbstorageComponent } from './components/laboratory/herbstorage/herbstorage.component';
+import { PotionstorageComponent } from './components/laboratory/potionstorage/potionstorage.component';
 // import { CauldronComponent } from './components/laboratory/cauldron/cauldron.component';
 
 @NgModule({
@@ -22,6 +25,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MainComponent,
     HistoryComponent,
     NavbarComponent,
+    CauldronComponent,
+    HerbstorageComponent,
+    PotionstorageComponent,
     // CauldronComponent,
   ],
   imports: [
