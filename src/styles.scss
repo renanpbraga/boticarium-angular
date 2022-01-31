@@ -1,1 +1,6 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+.border {
+  border: solid 1px black;
+  height: calc(100vmin - 70px);
+}
