@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PlayerDto } from 'src/app/dtos/player.dto';
 import { BoticariumService } from 'src/app/services/boticarium.service';
 
@@ -7,7 +7,7 @@ import { BoticariumService } from 'src/app/services/boticarium.service';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
-export class MainComponent implements OnInit, OnChanges {
+export class MainComponent implements OnInit {
   constructor(private readonly boticariumService: BoticariumService) {}
   isNewPlayer = false;
   newPlayerName: string = '';
@@ -24,20 +24,14 @@ export class MainComponent implements OnInit, OnChanges {
     herbStorage: [
       {
         name: 'Alamanda',
-        description:
-          'Planta semi-arbustiva de porte médio e caule delgado. Possui flores amarelas com leve aroma adocicado. Parte utilizada: Flores.',
         potential: 2,
         price: 2,
-        img: 'img',
         quantity: 2,
       },
       {
         name: 'Citrizela',
-        description:
-          'Planta herbácea fa família das gramíneas. Possui folhas longas e lanceoladas. Ao ser macerada, libera um suave odor cítrico. Parte utilizada: Folhas. ',
         potential: 1,
         price: 2,
-        img: 'img',
         quantity: 2,
       },
     ],
@@ -56,10 +50,6 @@ export class MainComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(): void {
-    this.getPlayers();
-  }
-
   startNewGame() {
     // creates the first player in localStorage
     const areTherePlayers = this.getPlayers();
@@ -71,6 +61,7 @@ export class MainComponent implements OnInit, OnChanges {
         this.newPlayer.stats.name = this.newPlayerName;
         this.newPlayer.stats.id = 1;
         localStorage.setItem('players', JSON.stringify([this.newPlayer]));
+        sessionStorage.setItem('player', JSON.stringify(this.newPlayer))
         this.updatePlayersList();
       }
     } else {
@@ -93,6 +84,7 @@ export class MainComponent implements OnInit, OnChanges {
             this.newPlayer.stats.id = parsePlayer.length + 1;
             parsePlayer.push(this.newPlayer);
             localStorage.setItem('players', JSON.stringify(parsePlayer));
+            sessionStorage.setItem('player', JSON.stringify(this.newPlayer))
             this.updatePlayersList();
           }
         }
@@ -132,9 +124,19 @@ export class MainComponent implements OnInit, OnChanges {
     if (playersList) {
       const parsePlayers = JSON.parse(playersList);
       const foundPlayer = parsePlayers.find(
-        (player: any) => player.id == this.selectedPlayerId
+        (player: PlayerDto) => player.stats.id == this.selectedPlayerId
       );
       sessionStorage.setItem('player', JSON.stringify(foundPlayer));
+    }
+  }
+
+  modifyPlayer() {
+    const sessionPlayer = sessionStorage.getItem('player');
+    if (sessionPlayer) {
+      const parseSessionPlayer = JSON.parse(sessionPlayer);
+      parseSessionPlayer.stats.gold += 100;
+      console.log(parseSessionPlayer);
+      sessionStorage.setItem('player',JSON.stringify(parseSessionPlayer));
     }
   }
 }
