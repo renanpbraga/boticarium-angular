@@ -12,6 +12,9 @@ import { CommonModule } from '@angular/common';
 import { HistoryComponent } from './components/history/history.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ShopComponent } from './components/shop/shop.component';
+import { CauldronComponent } from './components/laboratory/cauldron/cauldron.component';
+import { HerbstorageComponent } from './components/laboratory/herbstorage/herbstorage.component';
+import { PotionstorageComponent } from './components/laboratory/potionstorage/potionstorage.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { ShopComponent } from './components/shop/shop.component';
     HistoryComponent,
     NavbarComponent,
     ShopComponent,
+    CauldronComponent,
+    HerbstorageComponent,
+    PotionstorageComponent,
   ],
   imports: [
     CommonModule,
