@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerDto } from 'src/app/dtos/player.dto';
 import { BoticariumService } from 'src/app/services/boticarium.service';
 
@@ -8,7 +9,10 @@ import { BoticariumService } from 'src/app/services/boticarium.service';
   styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-  constructor(private readonly boticariumService: BoticariumService) {}
+  constructor(
+    private readonly boticariumService: BoticariumService,
+    private readonly navigation: Router
+  ) {}
   isNewPlayer = false;
   newPlayerName: string = '';
   newPlayer: PlayerDto = {
@@ -61,8 +65,9 @@ export class MainComponent implements OnInit {
         this.newPlayer.stats.name = this.newPlayerName;
         this.newPlayer.stats.id = 1;
         localStorage.setItem('players', JSON.stringify([this.newPlayer]));
-        sessionStorage.setItem('player', JSON.stringify(this.newPlayer))
+        sessionStorage.setItem('player', JSON.stringify(this.newPlayer));
         this.updatePlayersList();
+        this.navigation.navigateByUrl('/historia');
       }
     } else {
       // creates the 'n' player in localStorage
@@ -84,8 +89,9 @@ export class MainComponent implements OnInit {
             this.newPlayer.stats.id = parsePlayer.length + 1;
             parsePlayer.push(this.newPlayer);
             localStorage.setItem('players', JSON.stringify(parsePlayer));
-            sessionStorage.setItem('player', JSON.stringify(this.newPlayer))
+            sessionStorage.setItem('player', JSON.stringify(this.newPlayer));
             this.updatePlayersList();
+            this.navigation.navigateByUrl('/historia');
           }
         }
       }
@@ -127,16 +133,7 @@ export class MainComponent implements OnInit {
         (player: PlayerDto) => player.stats.id == this.selectedPlayerId
       );
       sessionStorage.setItem('player', JSON.stringify(foundPlayer));
-    }
-  }
-
-  modifyPlayer() {
-    const sessionPlayer = sessionStorage.getItem('player');
-    if (sessionPlayer) {
-      const parseSessionPlayer = JSON.parse(sessionPlayer);
-      parseSessionPlayer.stats.gold += 100;
-      console.log(parseSessionPlayer);
-      sessionStorage.setItem('player',JSON.stringify(parseSessionPlayer));
+      this.navigation.navigateByUrl("/laboratorio")
     }
   }
 }
