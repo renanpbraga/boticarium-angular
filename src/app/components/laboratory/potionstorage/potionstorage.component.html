@@ -1,1 +1,5 @@
-<p>potionstorage works!</p>
+<ul>
+  <span>Armário de poções</span>
+  <li *ngIf="!potionstorage">Vazio...</li>
+  <li *ngFor="let potion of potionstorage">{{potion.name}} (x{{potion.quantity}})</li>
+</ul>
