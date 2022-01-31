@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HistoryComponent } from './components/history/history.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-// import { CauldronComponent } from './components/laboratory/cauldron/cauldron.component';
+import { ShopComponent } from './components/shop/shop.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MainComponent,
     HistoryComponent,
     NavbarComponent,
-    // CauldronComponent,
+    ShopComponent,
   ],
   imports: [
     CommonModule,
