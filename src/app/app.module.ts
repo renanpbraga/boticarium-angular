@@ -9,6 +9,7 @@ import { LibraryComponent } from './components/library/library.component';
 import { MainComponent } from './components/main/main.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { HistoryComponent } from './components/history/history.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CommonModule } from '@angular/common';
     GardenComponent,
     LibraryComponent,
     MainComponent,
+    HistoryComponent,
   ],
   imports: [
     CommonModule,
