@@ -9,10 +9,15 @@ import { PotionsDto } from '../dtos/potions.dto';
 })
 export class BoticariumService {
   constructor() {}
-  playersList = new BehaviorSubject([])
+  playersList = new BehaviorSubject([]);
+  herbStorageList = new BehaviorSubject([{}]);
   
   setPlayersList(obj: any) {
     this.playersList.next(obj);
+  }
+
+  setHerbsStorageList(obj: any[]) {
+    this.herbStorageList.next(obj);
   }
 
   getPotions(): PotionsDto[] {
@@ -61,6 +66,13 @@ export class BoticariumService {
       },
     ];
     return herbs;
+  }
+
+  getCurrentPlayer() {
+    const player = sessionStorage.getItem('player');
+    if (player) {
+      return JSON.parse(player);
+    }
   }
 
   getPlayerHerbs() {
