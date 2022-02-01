@@ -1,1 +1,22 @@
-<p>cauldron works!</p>
+<div class="row">
+  <div class="col">
+    <label for="select-herbs" class="form-label">
+      Adicionar ao caldeirão:
+    </label>
+    <select name="select-herbs" id="select-herbs" class="form-select" (change)="selectHerb($event)">
+      <option value="" *ngIf="!herbsList">Vazio...</option>
+      <option value="">Selecione</option>
+      <option value="{{herb.name}}" *ngFor="let herb of herbsList">{{herb.name}}</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <small class="text-danger" *ngIf="selectHerbPlease">Selecione alguma erva para adicionar.</small>
+  </div>
+</div>
+<div class="row d-flex justify-content-end">
+  <div class="col-3 mt-2">
+    <button class="btn btn-primary w-100" (click)="putIntoCauldron()">Adicionar</button>
+  </div>
+</div>
