@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { PlayerStatsDto } from 'src/app/dtos/player-stats.dto';
 import { PlayerDto } from 'src/app/dtos/player.dto';
 import { BoticariumService } from 'src/app/services/boticarium.service';
 
@@ -132,7 +133,7 @@ export class MainComponent implements OnInit {
     if (playersList) {
       const parsePlayers = JSON.parse(playersList);
       const foundPlayer = parsePlayers.find(
-        (player: any) => player.id == this.selectedPlayerId
+        (player: PlayerDto) => player.stats.id === Number(this.selectedPlayerId)
       );
       this.selectedPlayer = foundPlayer;
     }

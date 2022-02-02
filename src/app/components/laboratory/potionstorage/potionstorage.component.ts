@@ -12,7 +12,7 @@ export class PotionstorageComponent implements OnInit {
   constructor(private readonly boticariumService: BoticariumService) { }
 
   ngOnInit(): void {
-    this.potionstorage = this.boticariumService.getPlayerPotions()
+    this.boticariumService.potionStorageList.subscribe((res: PotionsStorageDto[]) => this.potionstorage = res);
   }
 
 }

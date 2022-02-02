@@ -39,8 +39,10 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() : void {
-    const player = sessionStorage.getItem('player');
-    if (!player) {
+    const sessionPlayer = sessionStorage.getItem('player');
+    const localPlayer = localStorage.getItem('players');
+    if (!sessionPlayer || !localPlayer) {
+      sessionStorage.removeItem('player');
       this.route.navigateByUrl('/')
     }
   }

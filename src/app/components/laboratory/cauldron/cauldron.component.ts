@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { find, retry } from 'rxjs';
 import { HerbsStorageDto } from 'src/app/dtos/herbs-storage.dto';
+import { PlayerDto } from 'src/app/dtos/player.dto';
 import { PotionsStorageDto } from 'src/app/dtos/potions-storage.dto';
 import { PotionsDto } from 'src/app/dtos/potions.dto';
 import { BoticariumService } from 'src/app/services/boticarium.service';
@@ -20,7 +21,9 @@ export class CauldronComponent implements OnInit {
   constructor(private readonly boticariumService: BoticariumService) {}
 
   ngOnInit(): void {
-    this.herbsList = this.boticariumService.getPlayerHerbs();
+    this.boticariumService.herbStorageList.subscribe(
+      (res: HerbsStorageDto[]) => (this.herbsList = res)
+    );
     console.log(this.cauldronIngreds);
   }
 
@@ -36,12 +39,17 @@ export class CauldronComponent implements OnInit {
         .find((herb: HerbsStorageDto) => herb.name === this.selectedHerb);
       if (findSelectedHerb && findSelectedHerb.quantity > 0) {
         this.subtractHerbFromSessionStorage(this.selectedHerb, 1);
-          findSelectedHerb.quantity = 1;
-          this.cauldronIngreds?.push(findSelectedHerb);
-          const potentialArray = this.cauldronIngreds.map((ingred) => ingred.potential);
-          this.cauldronPotential = potentialArray.reduce(function (totalPotential, i) {
-            return totalPotential + i
-          });
+        findSelectedHerb.quantity = 1;
+        this.cauldronIngreds?.push(findSelectedHerb);
+        const potentialArray = this.cauldronIngreds.map(
+          (ingred) => ingred.potential
+        );
+        this.cauldronPotential = potentialArray.reduce(function (
+          totalPotential,
+          i
+        ) {
+          return totalPotential + i;
+        });
       }
       if (findSelectedHerb && findSelectedHerb.quantity === 0) {
         this.removeHerbFromSessionStorage(this.selectedHerb);
@@ -56,6 +64,7 @@ export class CauldronComponent implements OnInit {
     );
     player.herbStorage[index].quantity -= quantity;
     sessionStorage.setItem('player', JSON.stringify(player));
+    this.boticariumService.setHerbsStorageList(player.herbStorage);
   }
 
   removeHerbFromSessionStorage(herb: string) {
@@ -63,8 +72,9 @@ export class CauldronComponent implements OnInit {
     const index = player.herbStorage.findIndex(
       (her: HerbsStorageDto) => her.name === herb
     );
-    player.herbStorage.splice(index, 1)
+    player.herbStorage.splice(index, 1);
     sessionStorage.setItem('player', JSON.stringify(player));
+    this.boticariumService.setHerbsStorageList(player.herbStorage);
   }
 
   selectHerb(event: any) {
@@ -72,12 +82,16 @@ export class CauldronComponent implements OnInit {
   }
 
   createPotion() {
-    const potentialArray = this.cauldronIngreds.map((ingred) => ingred.potential);
+    const potentialArray = this.cauldronIngreds.map(
+      (ingred) => ingred.potential
+    );
     const totalPotential = potentialArray.reduce(function (totalPotential, i) {
-      return totalPotential + i
+      return totalPotential + i;
     });
     const allPotions = this.boticariumService.getPotions();
-    const foundPotion = allPotions.find((potion) => potion.potential === totalPotential);
+    const foundPotion = allPotions.find(
+      (potion) => potion.potential === totalPotential
+    );
     if (foundPotion) {
       const potion: PotionsStorageDto = {
         id: foundPotion.id,
@@ -89,19 +103,58 @@ export class CauldronComponent implements OnInit {
         quantity: 1,
       };
       const player = this.boticariumService.getCurrentPlayer();
-      const playerHasThisPotion = player.potionStorage.find((pot: PotionsStorageDto) => pot.id === potion.id);
+      const playerHasThisPotion = player.potionStorage.find(
+        (pot: PotionsStorageDto) => pot.id === potion.id
+      );
       if (playerHasThisPotion) {
-        const index = player.potionStorage.findIndex((pot: PotionsStorageDto) => pot.id === potion.id);
+        const index = player.potionStorage.findIndex(
+          (pot: PotionsStorageDto) => pot.id === potion.id
+        );
         player.potionStorage[index].quantity += 1;
-        sessionStorage.setItem('player', JSON.stringify(player));
-
+        player.stats.experience = this.setPlayerExperience(potion);
+        const playerWithExperience = this.verifyPlayerProgression(player)
+        sessionStorage.setItem('player', JSON.stringify(playerWithExperience));
+        this.emptyCauldron();
+        window.alert(`Você criou ${potion.name}`);
       } else {
         player.potionStorage.push(potion);
-        sessionStorage.setItem('player', JSON.stringify(player));
+        this.setPlayerExperience(potion);
+        const playerWithExperience = this.verifyPlayerProgression(player)
+        sessionStorage.setItem('player', JSON.stringify(playerWithExperience));
+        this.emptyCauldron();
+        window.alert(`Você criou ${potion.name}`);
       }
     } else {
       window.alert('A poção falhou!');
+      this.emptyCauldron();
     }
+  }
+
+  setPlayerExperience(potion: PotionsStorageDto) {
+    const player = this.boticariumService.getCurrentPlayer();
+    const xp = Math.ceil((potion.potential*10)-((player.stats.level*5)/100));
+    return player.stats.experience += xp;
+  }
+
+  verifyPlayerProgression(player: PlayerDto) {
+    const calcLevel = (player.stats.level * 80)
+    const fibonacci = this.calcFibonacci(calcLevel)
+    if (player.stats.experience >= fibonacci){
+      player.stats.level += 1
+      return player
+    } else {
+      return player;
+    }
+  }
+
+  calcFibonacci(num: number): number {
+    return (num - 1 + num - 2);
+  }
+
+  emptyCauldron() {
+    this.cauldronIngreds = [];
+    this.cauldronPotential = 0;
+    console.log(this.cauldronIngreds);
   }
 
   resetPlayer() {
@@ -120,7 +173,7 @@ export class CauldronComponent implements OnInit {
           name: 'Alamanda',
           potential: 2,
           price: 2,
-          quantity: 2,
+          quantity: 200,
         },
         {
           name: 'Citrizela',
@@ -143,8 +196,8 @@ export class CauldronComponent implements OnInit {
       ],
       knowledge: {
         herbs: ['Alamanda', 'Citrizela'],
-        potions: ['Poção de cura (menor)']
-      }
+        potions: ['Poção de cura (menor)'],
+      },
     };
 
     sessionStorage.setItem('player', JSON.stringify(player));

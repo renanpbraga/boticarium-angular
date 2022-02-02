@@ -12,7 +12,7 @@ export class HerbstorageComponent implements OnInit {
   constructor(private readonly boticariumService: BoticariumService) { }
 
   ngOnInit(): void {
-    this.herbstorage = this.boticariumService.getPlayerHerbs();
+    this.boticariumService.herbStorageList.subscribe((res: HerbsStorageDto[]) => this.herbstorage = res);
   }
 
 }

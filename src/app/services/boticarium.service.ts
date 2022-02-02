@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HerbsStorageDto } from '../dtos/herbs-storage.dto';
 import { HerbsDto } from '../dtos/herbs.dto';
+import { PlayerDto } from '../dtos/player.dto';
+import { PotionsStorageDto } from '../dtos/potions-storage.dto';
 import { PotionsDto } from '../dtos/potions.dto';
 
 @Injectable({
@@ -10,7 +12,8 @@ import { PotionsDto } from '../dtos/potions.dto';
 export class BoticariumService {
   constructor() {}
   playersList = new BehaviorSubject([]);
-  herbStorageList = new BehaviorSubject([{}]);
+  herbStorageList = new BehaviorSubject<HerbsStorageDto[]>(this.getPlayerHerbs());
+  potionStorageList = new BehaviorSubject<PotionsStorageDto[]>(this.getPlayerPotions());
   
   setPlayersList(obj: any) {
     this.playersList.next(obj);
@@ -18,6 +21,35 @@ export class BoticariumService {
 
   setHerbsStorageList(obj: HerbsStorageDto[]) {
     return this.herbStorageList.next(obj);
+  }
+
+  setPotionStorageList(obj: PotionsStorageDto[]) {
+    return this.potionStorageList.next(obj);
+  }
+
+  getCurrentPlayer() {
+    const player = sessionStorage.getItem('player');
+    if (player) {
+      return JSON.parse(player);
+    }
+  }
+
+  getPlayerHerbs() {
+    const player = sessionStorage.getItem('player');
+    if (player) {
+      const parsePlayer = JSON.parse(player);
+      const herbs = parsePlayer.herbStorage;
+      return herbs;
+    }
+  }
+
+  getPlayerPotions() {
+    const player = sessionStorage.getItem('player');
+    if (player) {
+      const parsePlayer = JSON.parse(player);
+      const potions = parsePlayer.potionStorage;
+      return potions;
+    }
   }
 
   getPotions(): PotionsDto[] {
@@ -69,30 +101,5 @@ export class BoticariumService {
       },
     ];
     return herbs;
-  }
-
-  getCurrentPlayer() {
-    const player = sessionStorage.getItem('player');
-    if (player) {
-      return JSON.parse(player);
-    }
-  }
-
-  getPlayerHerbs() {
-    const player = sessionStorage.getItem('player');
-    if (player) {
-      const parsePlayer = JSON.parse(player);
-      const herbs = parsePlayer.herbStorage;
-      return herbs;
-    }
-  }
-
-  getPlayerPotions() {
-    const player = sessionStorage.getItem('player');
-    if (player) {
-      const parsePlayer = JSON.parse(player);
-      const potions = parsePlayer.potionStorage;
-      return potions;
-    }
   }
 }
