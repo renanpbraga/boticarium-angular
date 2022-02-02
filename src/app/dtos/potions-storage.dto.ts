@@ -1,4 +1,5 @@
 export interface PotionsStorageDto {
+  id: number;
   name: string;
   description: string;
   element: string;

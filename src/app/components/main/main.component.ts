@@ -40,6 +40,7 @@ export class MainComponent implements OnInit {
       },
     ],
     potionStorage: [{
+      id: 1,
       name: 'Poção de cura (menor)',
       description:
         'Esta poção possui efeito de cura lento porém gradual. Usada geralmente para casos menos graves de ferimentos ou enfermidades leves.',
@@ -48,6 +49,10 @@ export class MainComponent implements OnInit {
       potential: 4,
       quantity: 1,
     }],
+    knowledge: {
+      herbs: ['Alamanda', 'Citrizela'],
+      potions: ['Poção de cura (menor)']
+    }
   };
   doubleNameMsg = false;
   fillNamePlease = false;

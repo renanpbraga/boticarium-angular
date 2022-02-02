@@ -16,13 +16,14 @@ export class BoticariumService {
     this.playersList.next(obj);
   }
 
-  setHerbsStorageList(obj: any[]) {
-    this.herbStorageList.next(obj);
+  setHerbsStorageList(obj: HerbsStorageDto[]) {
+    return this.herbStorageList.next(obj);
   }
 
   getPotions(): PotionsDto[] {
     const potions = [
       {
+        id: 1,
         name: 'Poção de cura (menor)',
         description:
           'Esta poção possui efeito de cura lento porém gradual. Usada geralmente para casos menos graves de ferimentos ou enfermidades leves.',
@@ -31,6 +32,7 @@ export class BoticariumService {
         potential: 4,
       },
       {
+        id: 2,
         name:'Poção de cura',
         description: 'Esta poção possui efeito de cura moderado. Usada geralmente para casos de doenças e infecções pouco graves.',
         element: 'Água',
@@ -38,6 +40,7 @@ export class BoticariumService {
         potential: 4.5,
       },
       {
+        id: 3,
         name:'Poção de cura (maior)',
         description: 'Esta poção tem efeitos de cura milagrosos. Capaz de curar ferimentos graves sem deixar cicatrizes. Curar doenças desconhecidas pelos médicos mais graduados.',
         element: 'Água',
