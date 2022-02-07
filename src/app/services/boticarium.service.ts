@@ -11,16 +11,16 @@ import { PotionsDto } from '../dtos/potions.dto';
 })
 export class BoticariumService {
   constructor() {}
-  playersList = new BehaviorSubject([]);
-  herbStorageList = new BehaviorSubject<HerbsStorageDto[]>(this.getPlayerHerbs());
-  potionStorageList = new BehaviorSubject<PotionsStorageDto[]>(this.getPlayerPotions());
+  public playersList = new BehaviorSubject([]);
+  public herbStorageList = new BehaviorSubject<HerbsStorageDto[]>(this.getPlayerHerbs());
+  public potionStorageList = new BehaviorSubject<PotionsStorageDto[]>(this.getPlayerPotions());
   
   setPlayersList(obj: any) {
     this.playersList.next(obj);
   }
 
   setHerbsStorageList(obj: HerbsStorageDto[]) {
-    return this.herbStorageList.next(obj);
+    this.herbStorageList.next(obj);
   }
 
   setPotionStorageList(obj: PotionsStorageDto[]) {
@@ -52,6 +52,52 @@ export class BoticariumService {
     }
   }
 
+  removeHerbFromSessionStorage(herb: string) {
+    const player = this.getCurrentPlayer();
+    const index = player.herbStorage.findIndex(
+      (her: HerbsStorageDto) => her.name === herb
+    );
+    player.herbStorage.splice(index, 1);
+    sessionStorage.setItem('player', JSON.stringify(player));
+    this.setHerbsStorageList(player.herbStorage);
+  }
+
+  subtractHerbFromSessionStorage(herb: string, quantity: number) {
+    const player = this.getCurrentPlayer();
+    const index = player.herbStorage.findIndex(
+      (her: HerbsStorageDto) => her.name === herb
+    );
+    player.herbStorage[index].quantity -= quantity;
+    if (player.herbStorage[index].quantity > 0) {
+      sessionStorage.setItem('player', JSON.stringify(player));
+      this.setHerbsStorageList(player.herbStorage);
+    } else {
+      this.removeHerbFromSessionStorage(herb);
+    }
+  }
+
+  setPlayerExperience(potion: PotionsStorageDto) {
+    const player = this.getCurrentPlayer();
+    const xp = Math.ceil((potion.potential*10)-((player.stats.level*5)/100));
+    return player.stats.experience += xp;
+  }
+
+  verifyPlayerProgression(player: PlayerDto) {
+    const calcLevel = (player.stats.level * 80)
+    const fibonacci = this.calcFibonacci(calcLevel)
+    if (player.stats.experience >= fibonacci){
+      player.stats.level += 1
+      return player
+    } else {
+      return player;
+    }
+  }
+
+  calcFibonacci(num: number): number {
+    return (num - 1 + num - 2);
+  }
+
+
   getPotions(): PotionsDto[] {
     const potions = [
       {
@@ -62,6 +108,7 @@ export class BoticariumService {
         element: 'Água',
         price: 10,
         potential: 4,
+        img: 'assets/potions/healing-potion-minor.png',
       },
       {
         id: 2,
