@@ -5,5 +5,11 @@ ul {
   }
   li {
     margin-left: 15px;
+    img {
+      width: 50px;
+    }
+    span {
+      font-size: 10px;
+    }
   }
 }
