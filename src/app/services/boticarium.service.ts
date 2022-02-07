@@ -52,6 +52,14 @@ export class BoticariumService {
     }
   }
 
+  findPotion(id: number) {
+    const potionStorage = this.getCurrentPlayer().potionStorage;
+    const foundPotion = potionStorage.find((potion: PotionsStorageDto) => potion.id === id);
+    if (foundPotion) {
+      return foundPotion;
+    }
+  }
+
   removeHerbFromSessionStorage(herb: string) {
     const player = this.getCurrentPlayer();
     const index = player.herbStorage.findIndex(
