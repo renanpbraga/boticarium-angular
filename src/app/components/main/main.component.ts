@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PlayerStatsDto } from 'src/app/dtos/player-stats.dto';
 import { PlayerDto } from 'src/app/dtos/player.dto';
 import { BoticariumService } from 'src/app/services/boticarium.service';
 
@@ -40,20 +39,22 @@ export class MainComponent implements OnInit {
         quantity: 2,
       },
     ],
-    potionStorage: [{
-      id: 1,
-      name: 'Poção de cura (menor)',
-      description:
-        'Esta poção possui efeito de cura lento porém gradual. Usada geralmente para casos menos graves de ferimentos ou enfermidades leves.',
-      element: 'Água',
-      price: 10,
-      potential: 4,
-      quantity: 1,
-    }],
+    potionStorage: [
+      {
+        id: 1,
+        name: 'Poção de cura (menor)',
+        description:
+          'Esta poção possui efeito de cura lento porém gradual. Usada geralmente para casos menos graves de ferimentos ou enfermidades leves.',
+        element: 'Água',
+        price: 10,
+        potential: 4,
+        quantity: 1,
+      },
+    ],
     knowledge: {
       herbs: ['Alamanda', 'Citrizela'],
-      potions: ['Poção de cura (menor)']
-    }
+      potions: ['Poção de cura (menor)'],
+    },
   };
   doubleNameMsg = false;
   fillNamePlease = false;
@@ -147,7 +148,12 @@ export class MainComponent implements OnInit {
         (player: PlayerDto) => player.stats.id == this.selectedPlayerId
       );
       sessionStorage.setItem('player', JSON.stringify(foundPlayer));
-      this.navigation.navigateByUrl("/laboratorio")
+      this.go_next();
     }
+  }
+  go_next() {
+    setTimeout(() => {
+      this.navigation.navigateByUrl('/laboratorio');
+    }, 5000);
   }
 }
