@@ -1,5 +1,8 @@
 <ul>
   <span>Armário de poções</span>
   <li *ngIf="!potionstorage">Vazio...</li>
-  <li *ngFor="let potion of potionstorage">{{potion.name}} (x{{potion.quantity}})</li>
+  <li *ngFor="let potion of potionstorage">
+    <img src="assets/potions/healing-potion-minor.png" alt="healing potion minor">
+    <span>{{potion.name}} (x{{potion.quantity}})</span>
+  </li>
 </ul>

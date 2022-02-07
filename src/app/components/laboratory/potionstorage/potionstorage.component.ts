@@ -1,21 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { PotionsStorageDto } from 'src/app/dtos/potions-storage.dto';
+import { BoticariumService } from 'src/app/services/boticarium.service';
 
 @Component({
   selector: 'app-potionstorage',
   templateUrl: './potionstorage.component.html',
   styleUrls: ['./potionstorage.component.scss']
 })
-export class PotionstorageComponent implements OnInit {
+export class PotionstorageComponent implements OnInit{
   potionstorage?: PotionsStorageDto[];
-  constructor() { }
+  constructor(private readonly boticariumService: BoticariumService) { }
 
   ngOnInit(): void {
-    const getPlayer = sessionStorage.getItem('player');
-    if (getPlayer) {
-      const parsePlayer = JSON.parse(getPlayer);
-      this.potionstorage = parsePlayer.potionStorage;
-    }
+    this.boticariumService.potionStorageList.subscribe(
+      (res) => {
+        if (res) {
+          this.potionstorage = res;
+        } else {
+          this.potionstorage = this.boticariumService.getPlayerPotions();
+        }
+      }
+    );
   }
 
 }

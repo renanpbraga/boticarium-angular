@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PlayerDto } from './dtos/player.dto';
 
 @Component({
@@ -6,7 +7,10 @@ import { PlayerDto } from './dtos/player.dto';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+
+  constructor(private readonly route: Router) { }
+  
   title = 'boticarium';
 
   @HostListener('window:beforeunload')
@@ -31,6 +35,15 @@ export class AppComponent {
           JSON.stringify(filteredPlayers)
         );
       }
+    }
+  }
+
+  ngOnInit() : void {
+    const sessionPlayer = sessionStorage.getItem('player');
+    const localPlayer = localStorage.getItem('players');
+    if (!sessionPlayer || !localPlayer) {
+      sessionStorage.removeItem('player');
+      this.route.navigateByUrl('/')
     }
   }
 }
