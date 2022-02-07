@@ -7,12 +7,20 @@ import { BoticariumService } from 'src/app/services/boticarium.service';
   templateUrl: './potionstorage.component.html',
   styleUrls: ['./potionstorage.component.scss']
 })
-export class PotionstorageComponent implements OnInit {
+export class PotionstorageComponent implements OnInit{
   potionstorage?: PotionsStorageDto[];
   constructor(private readonly boticariumService: BoticariumService) { }
 
   ngOnInit(): void {
-    this.boticariumService.potionStorageList.subscribe((res: PotionsStorageDto[]) => this.potionstorage = res);
+    this.boticariumService.potionStorageList.subscribe(
+      (res) => {
+        if (res) {
+          this.potionstorage = res;
+        } else {
+          this.potionstorage = this.boticariumService.getPlayerPotions();
+        }
+      }
+    );
   }
 
 }
