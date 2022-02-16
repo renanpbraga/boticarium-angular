@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HerbsStorageDto } from 'src/app/dtos/herbs-storage.dto';
-import { PlayerDto } from 'src/app/dtos/player.dto';
 import { PotionsStorageDto } from 'src/app/dtos/potions-storage.dto';
 import { BoticariumService } from 'src/app/services/boticarium.service';
 
@@ -137,7 +136,7 @@ export class CauldronComponent implements OnInit {
         },
         {
           name: 'Citrizela',
-          potential: 1,
+          potential: -2,
           price: 2,
           quantity: 2,
         },
@@ -157,6 +156,9 @@ export class CauldronComponent implements OnInit {
       knowledge: {
         herbs: ['Alamanda', 'Citrizela'],
         potions: ['Poção de cura (menor)'],
+        habilities: {
+          bargain: 10,
+        }
       },
     };
 
