@@ -54,6 +54,9 @@ export class MainComponent implements OnInit {
     knowledge: {
       herbs: ['Alamanda', 'Citrizela'],
       potions: ['Poção de cura (menor)'],
+      habilities: {
+        bargain: 10,
+      }
     },
   };
   doubleNameMsg = false;

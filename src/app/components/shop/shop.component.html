@@ -1,1 +1,45 @@
-<p>shop works!</p>
+<app-navbar></app-navbar>
+<div class="row">
+  <div class="col">
+    <app-customer></app-customer>
+  </div>
+  <div class="col">
+    <select name="" id="" class="form-select" (change)="selectPotion($event)">
+      <option value="" selected>Selecione...</option>
+      <option value="{{ potion.id }}" *ngFor="let potion of potionstorage">
+        {{ potion.name }} (x{{ potion.quantity }})
+      </option>
+    </select>
+    <div *ngIf="selectedPotion" class="mt-4">
+      <ul>
+        <li>Nome: {{ selectedPotion.name }}</li>
+        <li>Preço: ${{ selectedPotion.price }}</li>
+      </ul>
+    </div>
+    <div class="row" *ngIf="selectedPotion">
+      <div class="col-3">
+        <button class="btn btn-primary w-100" (click)="sell()">
+          Vender
+        </button>
+      </div>
+      <div class="col-3">
+        <button class="btn btn-secondary w-100" (click)="toggleBargain()">
+          Barganhar
+        </button>
+      </div>
+      <div class="col-3 d-flex flex-column">
+        <input
+          type="range"
+          name="bargain"
+          id="bargain"
+          *ngIf="isBargain"
+          [(ngModel)]="bargainPrice"
+          (ngModelChange)="bargain($event)"
+          value="{{bargainPrice}}"
+          [max]="maxBargain"
+        />
+        <span *ngIf="isBargain">Barganha: ${{ bargainPrice }}</span>
+      </div>
+    </div>
+  </div>
+</div>
