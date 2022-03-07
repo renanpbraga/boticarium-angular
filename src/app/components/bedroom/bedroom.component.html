@@ -1,0 +1,35 @@
+<section>
+  <div class="row" *ngIf="player">
+    <div class="col">
+      <ul>
+        <span>Status</span>
+        <li>Nome: {{ player.stats.name }}</li>
+        <li>Nível: {{ player.stats.level }}</li>
+        <li>Ouro: {{ player.stats.gold }}</li>
+        <li>
+          Reputação: {{ player.stats.reputation }} ({{
+            player.stats.reputation < 50
+              ? "Ruim"
+              : player.stats.reputation > 50
+              ? "Boa"
+              : "Neutra"
+          }})
+        </li>
+        <li>
+          Tendência: {{ player.stats.tendency }}
+        </li>
+      </ul>
+    </div>
+    <div class="col">
+      <ul>
+        <span>Conhecimentos</span>
+        <li *ngFor="let hability of player?.knowledge?.habilities">{{hability.name}}: {{hability.value}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-6">
+      <button class="btn btn-primary w-100">Descansar</button>
+    </div>
+  </div>
+</section>
