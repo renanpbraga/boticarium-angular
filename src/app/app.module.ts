@@ -16,6 +16,7 @@ import { CauldronComponent } from './components/laboratory/cauldron/cauldron.com
 import { HerbstorageComponent } from './components/laboratory/herbstorage/herbstorage.component';
 import { PotionstorageComponent } from './components/laboratory/potionstorage/potionstorage.component';
 import { ShopCustomerComponent } from './components/shop/customer/customer.component';
+import { BedroomComponent } from './components/bedroom/bedroom.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,8 @@ import { ShopCustomerComponent } from './components/shop/customer/customer.compo
     HerbstorageComponent,
     PotionstorageComponent,
     ShopCustomerComponent,
+    ShopCustomerComponent,
+    BedroomComponent,
   ],
   imports: [
     CommonModule,

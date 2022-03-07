@@ -21,7 +21,7 @@ export class MainComponent implements OnInit {
       gold: 0,
       name: '',
       level: 1,
-      reputation: 0,
+      reputation: 50,
       tendency: 'Neutro',
       experience: 0,
     },
@@ -54,9 +54,10 @@ export class MainComponent implements OnInit {
     knowledge: {
       herbs: ['Alamanda', 'Citrizela'],
       potions: ['Poção de cura (menor)'],
-      habilities: {
-        bargain: 10,
-      }
+      habilities: [{
+        name: 'Barganha',
+        value: 10,
+      }]
     },
   };
   doubleNameMsg = false;
