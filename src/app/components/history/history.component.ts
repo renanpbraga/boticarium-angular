@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BoticariumService } from 'src/app/services/boticarium.service';
 
 @Component({
   selector: 'app-history',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
-
-  constructor() { }
+playerName?: string;
+  constructor(private readonly boticariumService: BoticariumService) { }
 
   ngOnInit(): void {
+    const player = this.boticariumService.getCurrentPlayer();
+    this.playerName = player.stats.name;
   }
 
 }
